@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EF5 User Manual &mdash; EF5Manual 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            EF5Manual
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">EF5 User Manual</a><ul>
+<li><a class="reference internal" href="#about-ef5">About EF5</a></li>
+<li><a class="reference internal" href="#hydrologic-water-balance-models">Hydrologic Water Balance Models</a></li>
+<li><a class="reference internal" href="#routing-models">Routing Models</a></li>
+<li><a class="reference internal" href="#snow-melt-models">Snow Melt Models</a></li>
+<li><a class="reference internal" href="#inundation-models">Inundation Models</a></li>
+<li><a class="reference internal" href="#compiling-ef5">Compiling EF5</a></li>
+<li><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#execute-block">Execute Block</a></li>
+<li><a class="reference internal" href="#running-ef5">Running EF5</a></li>
+<li><a class="reference internal" href="#calibrating-the-models">Calibrating the Models</a></li>
+<li><a class="reference internal" href="#appendix">Appendix</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">EF5Manual</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">EF5 User Manual</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ef5-user-manual">
+<h1>EF5 User Manual<a class="headerlink" href="#ef5-user-manual" title="Link to this heading"></a></h1>
+<p>Version 1.0 (July, 2016)</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#about-ef5" id="id3">About EF5</a></p></li>
+<li><p><a class="reference internal" href="#hydrologic-water-balance-models" id="id4">Hydrologic Water Balance Models</a></p></li>
+<li><p><a class="reference internal" href="#routing-models" id="id5">Routing Models</a></p></li>
+<li><p><a class="reference internal" href="#snow-melt-models" id="id6">Snow Melt Models</a></p></li>
+<li><p><a class="reference internal" href="#inundation-models" id="id7">Inundation Models</a></p></li>
+<li><p><a class="reference internal" href="#compiling-ef5" id="id8">Compiling EF5</a></p></li>
+<li><p><a class="reference internal" href="#configuration-file" id="id9">Configuration File</a></p></li>
+<li><p><a class="reference internal" href="#tasks" id="id10">Tasks</a></p></li>
+<li><p><a class="reference internal" href="#execute-block" id="id11">Execute Block</a></p></li>
+<li><p><a class="reference internal" href="#running-ef5" id="id12">Running EF5</a></p></li>
+<li><p><a class="reference internal" href="#calibrating-the-models" id="id13">Calibrating the Models</a></p></li>
+<li><p><a class="reference internal" href="#appendix" id="id14">Appendix</a></p></li>
+</ul>
+</nav>
+<section id="about-ef5">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">About EF5</a><a class="headerlink" href="#about-ef5" title="Link to this heading"></a></h2>
+<p>EF5 is designed to facilitate creation of ensemble forecasts for flash flood prediction. It incorporates multi-model support while maintaining a single set of input data. Currently, the only supported model is the Coupled Routing and Excess Storage (CREST) hydrologic model. Additionally, EF5 is optimized for parallel computing—portions of CREST use OpenMP for multi-core processing.</p>
+</section>
+<section id="hydrologic-water-balance-models">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Hydrologic Water Balance Models</a><a class="headerlink" href="#hydrologic-water-balance-models" title="Link to this heading"></a></h2>
+<p>### CREST
+The Coupled Routing and Excess Storage (CREST) distributed hydrological model is a hybrid strategy developed by the University of Oklahoma and the NASA SERVIR Project Team. CREST simulates the spatiotemporal variation of water and energy fluxes and storages on a user-defined grid. Its scalability is achieved through sub-grid scale representation of soil moisture storage (using a variable infiltration curve) and runoff generation (using linear reservoirs). Originally developed for global flood predictions, it is also suitable for basin-scale applications.</p>
+<p>More detailed information about CREST can be found in the publication:
+<a class="reference external" href="https://dx.doi.org/10.1080/02626667.2010.543087">Wang, J., et al. (2011)</a></p>
+<p>### SAC-SMA
+The Sacramento Soil Moisture Accounting (SAC-SMA) Model was developed by the U.S. National Weather Service. Its purpose is to parameterize soil moisture characteristics so that applied moisture is logically distributed, percolation is realistically simulated, and streamflow is effectively modeled.</p>
+<p>More detailed information about SAC-SMA is available at:
+<a class="reference external" href="http://www.nws.noaa.gov/oh/hrl/nwsrfs/users_manual/part2/_pdf/23sacsma.pdf">U.S. NWS SAC-SMA algorithm description</a></p>
+<p>### HP
+The Hydrophobic (HP) water balance model assumes an entirely impervious surface where all rainfall is transformed directly into surface runoff.</p>
+</section>
+<section id="routing-models">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Routing Models</a><a class="headerlink" href="#routing-models" title="Link to this heading"></a></h2>
+<p>### Linear Reservoir
+Adapted from the CREST implementation, the linear reservoir routing model uses two reservoirs—one for overland (surface) runoff and one for subsurface runoff.</p>
+<p>### Kinematic Wave
+Kinematic wave routing is a simplified approximation of the Barré de Saint-Venant equations. It assumes that gravitational and friction forces cancel and neglects acceleration terms.</p>
+</section>
+<section id="snow-melt-models">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Snow Melt Models</a><a class="headerlink" href="#snow-melt-models" title="Link to this heading"></a></h2>
+<p>### Snow-17
+Snow-17 is a temperature-index based snow melt module widely used by the U.S. NWS.</p>
+</section>
+<section id="inundation-models">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Inundation Models</a><a class="headerlink" href="#inundation-models" title="Link to this heading"></a></h2>
+<p>### Simple Inundation
+The Simple Inundation model provides basic inundation modeling functionality.</p>
+</section>
+<section id="compiling-ef5">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Compiling EF5</a><a class="headerlink" href="#compiling-ef5" title="Link to this heading"></a></h2>
+<p>EF5 uses the TIFF and GEOTIFF libraries for raster formats. Compilation can be performed in three steps:</p>
+<ol class="arabic">
+<li><p><strong>(Developer Only)</strong> – If you are modifying the Makefile.am, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>autoreconf<span class="w"> </span>--force<span class="w"> </span>--install
+</pre></div>
+</div>
+</li>
+<li><p><strong>Configure</strong> – If you wish to install EF5 to a custom path, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/path/to/installation
+</pre></div>
+</div>
+</li>
+<li><p><strong>Compile</strong> – Build EF5 with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-O3 -fopenmp&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Upon successful compilation, a binary named <code class="docutils literal notranslate"><span class="pre">ef5</span></code> will be created in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory.</p>
+</section>
+<section id="configuration-file">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Configuration File</a><a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h2>
+<p>The configuration file controls all user-adjustable settings for EF5, including input forcings, output options, and run methods. It is generally case <strong>insensitive</strong> (except for file paths on case-sensitive systems). Three styles of comments are supported: bash (#), C (/* <a href="#id1"><span class="problematic" id="id2">*</span></a>/), and C++ (//).</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># All variables (except file paths) are case insensitive</span>
+<span class="na">// Multiple comment types are supported</span>
+<span class="na">/*</span>
+<span class="w">   </span><span class="na">Including multi-line C-style comments</span>
+<span class="na">*/</span>
+</pre></div>
+</div>
+<p>### Basic Information
+Specifies file locations for the digital elevation model (DEM), drainage direction map (DDM), and flow accumulation map (FAM).</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[Basic]</span>
+<span class="na">DEM</span><span class="o">=</span><span class="s">/EF5Demo/FF/basic/DEM.asc</span>
+<span class="na">DDM</span><span class="o">=</span><span class="s">/EF5Demo/FF/basic/DDM.asc</span>
+<span class="na">FAM</span><span class="o">=</span><span class="s">/EF5Demo/FF/basic/FAM.asc</span>
+<span class="na">PROJ</span><span class="o">=</span><span class="s">laea</span>
+<span class="na">ESRIDDM</span><span class="o">=</span><span class="s">true</span>
+<span class="na">SELFFAM</span><span class="o">=</span><span class="s">true</span>
+</pre></div>
+</div>
+<p>### Precipitation Information
+Defines the properties of the precipitation forcing files.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[PrecipForcing Q2Precip]</span>
+<span class="na">TYPE</span><span class="o">=</span><span class="s">BIF</span>
+<span class="na">UNIT</span><span class="o">=</span><span class="s">mm/h</span>
+<span class="na">FREQ</span><span class="o">=</span><span class="s">5u</span>
+<span class="na">LOC</span><span class="o">=</span><span class="s">/EF5Demo/FF/precip</span>
+<span class="na">NAME</span><span class="o">=</span><span class="s">Q2_YYYYMMDDHHUU.bif</span>
+</pre></div>
+</div>
+<p>### Potential Evapotranspiration (PET) Information
+Defines the PET forcing file details.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[PETForcing PET]</span>
+<span class="na">TYPE</span><span class="o">=</span><span class="s">BIF</span>
+<span class="na">UNIT</span><span class="o">=</span><span class="s">mm/h</span>
+<span class="na">FREQ</span><span class="o">=</span><span class="s">m</span>
+<span class="na">LOC</span><span class="o">=</span><span class="s">/EF5Demo/FF/pet</span>
+<span class="na">NAME</span><span class="o">=</span><span class="s">PET_MM.bif</span>
+</pre></div>
+</div>
+<p>### Gauge Locations
+Specifies the locations of gauges for output and parameter assignment.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[Gauge OKC]</span>
+<span class="na">LON</span><span class="o">=</span><span class="s">-97.01</span>
+<span class="na">LAT</span><span class="o">=</span><span class="s">35.68</span>
+<span class="na">OBS</span><span class="o">=</span><span class="s">/EF5Demo/obs/okc.csv</span>
+<span class="na">BASINAREA</span><span class="o">=</span><span class="s">341.88</span>
+<span class="na">OUTPUTTS</span><span class="o">=</span><span class="s">TRUE</span>
+
+<span class="k">[Gauge AR]</span>
+<span class="na">LON</span><span class="o">=</span><span class="s">-93.62</span>
+<span class="na">LAT</span><span class="o">=</span><span class="s">34.37</span>
+</pre></div>
+</div>
+<p>### Basins
+Groups gauge locations into basins.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[Basin FF]</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">OKC</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">AR</span>
+</pre></div>
+</div>
+<p>### Parameter Sets
+Control the distributed model parameter settings. Parameters are specified per gauge.</p>
+<p>#### CREST Parameter Set</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[CrestParamSet ABRFC]</span>
+<span class="na">wm_grid</span><span class="o">=</span><span class="s">/path/to/wm.tif</span>
+<span class="na">im_grid</span><span class="o">=</span><span class="s">/path/to/im.tif</span>
+<span class="na">fc_grid</span><span class="o">=</span><span class="s">/path/to/ksat.tif</span>
+<span class="na">b_grid</span><span class="o">=</span><span class="s">/path/to/b.tif</span>
+<span class="na">gauge</span><span class="o">=</span><span class="s">03455500</span>
+<span class="na">wm</span><span class="o">=</span><span class="s">1.00</span>
+<span class="na">b</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">im</span><span class="o">=</span><span class="s">0.01</span>
+<span class="na">ke</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">fc</span><span class="o">=</span><span class="s">1.00</span>
+<span class="na">iwu</span><span class="o">=</span><span class="s">50.0</span>
+</pre></div>
+</div>
+<p>#### SAC-SMA Parameter Set</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[SacParamSet ABRFC]</span>
+<span class="na">UZTWM_grid</span><span class="o">=</span><span class="s">/path/to/uztwm.tif</span>
+<span class="na">UZFWM_grid</span><span class="o">=</span><span class="s">/path/to/uzfwm.tif</span>
+<span class="na">UZK_grid</span><span class="o">=</span><span class="s">/path/to/uzk.tif</span>
+<span class="na">ZPERC_grid</span><span class="o">=</span><span class="s">/path/to/zperc.tif</span>
+<span class="na">REXP_grid</span><span class="o">=</span><span class="s">/path/to/rexp.tif</span>
+<span class="na">LZTWM_grid</span><span class="o">=</span><span class="s">/path/to/lztwm.tif</span>
+<span class="na">LZFSM_grid</span><span class="o">=</span><span class="s">/path/to/lzfsm.tif</span>
+<span class="na">LZFPM_grid</span><span class="o">=</span><span class="s">/path/to/lzfpm.tif</span>
+<span class="na">LZSK_grid</span><span class="o">=</span><span class="s">/path/to/lzsk.tif</span>
+<span class="na">LZPK_grid</span><span class="o">=</span><span class="s">/path/to/lzpk.tif</span>
+<span class="na">PFREE_grid</span><span class="o">=</span><span class="s">/path/to/pfree.tif</span>
+<span class="na">gauge</span><span class="o">=</span><span class="s">01055000</span>
+<span class="na">UZTWM</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">UZFWM</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">UZK</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">PCTIM</span><span class="o">=</span><span class="s">0.101</span>
+<span class="na">ADIMP</span><span class="o">=</span><span class="s">0.10</span>
+<span class="na">RIVA</span><span class="o">=</span><span class="s">1.001</span>
+<span class="na">ZPERC</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">REXP</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">LZTWM</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">LZFSM</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">LZFPM</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">LZSK</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">LZPK</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">PFREE</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">SIDE</span><span class="o">=</span><span class="s">0.0</span>
+<span class="na">RSERV</span><span class="o">=</span><span class="s">0.3</span>
+<span class="na">ADIMC</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">UZTWC</span><span class="o">=</span><span class="s">0.55</span>
+<span class="na">UZFWC</span><span class="o">=</span><span class="s">0.14</span>
+<span class="na">LZTWC</span><span class="o">=</span><span class="s">0.56</span>
+<span class="na">LZFSC</span><span class="o">=</span><span class="s">0.11</span>
+<span class="na">LZFPC</span><span class="o">=</span><span class="s">0.46</span>
+</pre></div>
+</div>
+<p>#### HP Parameter Set
+<em>To be completed in a future revision.</em></p>
+<p>#### Linear Reservoir Parameter Set</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[lrparamset rundu]</span>
+<span class="na">gauge</span><span class="o">=</span><span class="s">rundu</span>
+<span class="na">coem</span><span class="o">=</span><span class="s">1611.115479</span>
+<span class="na">river</span><span class="o">=</span><span class="s">307.980042</span>
+<span class="na">under</span><span class="o">=</span><span class="s">2531.556641</span>
+<span class="na">leako</span><span class="o">=</span><span class="s">0.918236</span>
+<span class="na">leaki</span><span class="o">=</span><span class="s">0.017568</span>
+<span class="na">th</span><span class="o">=</span><span class="s">8.140809</span>
+<span class="na">iso</span><span class="o">=</span><span class="s">0.000040</span>
+<span class="na">isu</span><span class="o">=</span><span class="s">0.000073</span>
+</pre></div>
+</div>
+<p>#### Kinematic Wave Parameter Set</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[KWParamSet rundu]</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">rundu</span>
+<span class="na">UNDER</span><span class="o">=</span><span class="s">1.673110</span>
+<span class="na">LEAKI</span><span class="o">=</span><span class="s">0.043105</span>
+<span class="na">TH</span><span class="o">=</span><span class="s">6.658569</span>
+<span class="na">ISU</span><span class="o">=</span><span class="s">0.000000</span>
+<span class="na">ALPHA</span><span class="o">=</span><span class="s">2.991570</span>
+<span class="na">BETA</span><span class="o">=</span><span class="s">0.932080</span>
+<span class="na">ALPHA0</span><span class="o">=</span><span class="s">4.603945</span>
+</pre></div>
+</div>
+<p>#### Snow-17 Parameter Set</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[snow17paramset tarbela]</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">tarbela</span>
+<span class="na">UADJ</span><span class="o">=</span><span class="s">0.184653</span>
+<span class="na">MBASE</span><span class="o">=</span><span class="s">0.047224</span>
+<span class="na">MFMAX</span><span class="o">=</span><span class="s">1.068658</span>
+<span class="na">MFMIN</span><span class="o">=</span><span class="s">0.516059</span>
+<span class="na">TIPM</span><span class="o">=</span><span class="s">0.911706</span>
+<span class="na">NMF</span><span class="o">=</span><span class="s">0.077336</span>
+<span class="na">PLWHC</span><span class="o">=</span><span class="s">0.093812</span>
+<span class="na">SCF</span><span class="o">=</span><span class="s">2.219492</span>
+</pre></div>
+</div>
+<p>#### Simple Inundation Parameter Set</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[simpleinundationparamset rundu]</span>
+<span class="na">gauge</span><span class="o">=</span><span class="s">rundu</span>
+<span class="na">alpha</span><span class="o">=</span><span class="s">2.991570</span>
+<span class="na">beta</span><span class="o">=</span><span class="s">0.932080</span>
+</pre></div>
+</div>
+</section>
+<section id="tasks">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Tasks</a><a class="headerlink" href="#tasks" title="Link to this heading"></a></h2>
+<p>Tasks define which model to run, the simulation period, timestep, and related settings.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[Task RunFF]</span>
+<span class="na">STYLE</span><span class="o">=</span><span class="s">SIMU</span>
+<span class="na">MODEL</span><span class="o">=</span><span class="s">CREST</span>
+<span class="na">BASIN</span><span class="o">=</span><span class="s">FF</span>
+<span class="na">PRECIP</span><span class="o">=</span><span class="s">Q2_PRECIP</span>
+<span class="na">PET</span><span class="o">=</span><span class="s">PET</span>
+<span class="na">OUTPUT</span><span class="o">=</span><span class="s">/EF5Demo/FF/output/</span>
+<span class="na">PARAM_SET</span><span class="o">=</span><span class="s">FF</span>
+<span class="na">TIMESTEP</span><span class="o">=</span><span class="s">5u</span>
+<span class="na">TIME_BEGIN</span><span class="o">=</span><span class="s">201006010000</span>
+<span class="na">TIME_END</span><span class="o">=</span><span class="s">201006010030</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>STYLE</strong>: Task style (e.g., SIMU, SIMU_RP, CALI_DREAM, etc.)</p></li>
+<li><p><strong>MODEL</strong>: Water balance model (e.g., CREST, SAC, HyMOD)</p></li>
+<li><p><strong>BASIN</strong>: Basin block name</p></li>
+<li><p><strong>PRECIP/PET</strong>: Forcing file blocks</p></li>
+<li><p><strong>PARAM_SET</strong>: Parameter set block name</p></li>
+<li><p><strong>TIMESTEP, TIME_BEGIN, TIME_END</strong>: Simulation timing parameters</p></li>
+</ul>
+</section>
+<section id="execute-block">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Execute Block</a><a class="headerlink" href="#execute-block" title="Link to this heading"></a></h2>
+<p>Specifies which task to execute when EF5 runs.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[Execute]</span>
+<span class="na">TASK</span><span class="o">=</span><span class="s">RunFF</span>
+</pre></div>
+</div>
+</section>
+<section id="running-ef5">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Running EF5</a><a class="headerlink" href="#running-ef5" title="Link to this heading"></a></h2>
+<p>To run EF5, execute the binary with an optional control file argument:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ef5<span class="w"> </span><span class="o">[</span>controlfile<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="calibrating-the-models">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Calibrating the Models</a><a class="headerlink" href="#calibrating-the-models" title="Link to this heading"></a></h2>
+<p>This section will be completed once calibration methods are implemented.</p>
+</section>
+<section id="appendix">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Appendix</a><a class="headerlink" href="#appendix" title="Link to this heading"></a></h2>
+<p>### Complete Sample Configuration File</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">/*</span>
+<span class="w"> </span><span class="na">* This is an example configuration file for EF5</span>
+<span class="w"> </span><span class="na">*/</span>
+
+<span class="k">[Basic]</span>
+<span class="na">DEM</span><span class="o">=</span><span class="s">/EF5Demo/FF/basic/DEM.asc</span>
+<span class="na">DDM</span><span class="o">=</span><span class="s">/EF5Demo/FF/basic/DDM.asc</span>
+<span class="na">FAM</span><span class="o">=</span><span class="s">/EF5Demo/FF/basic/FAM.asc</span>
+<span class="na">PROJ</span><span class="o">=</span><span class="s">laea</span>
+<span class="na">ESRIDDM</span><span class="o">=</span><span class="s">true</span>
+
+<span class="k">[PrecipForcing Q2Precip]</span>
+<span class="na">TYPE</span><span class="o">=</span><span class="s">BIF</span>
+<span class="na">UNIT</span><span class="o">=</span><span class="s">mm/h</span>
+<span class="na">FREQ</span><span class="o">=</span><span class="s">5u</span>
+<span class="na">LOC</span><span class="o">=</span><span class="s">/EF5Demo/FF/precip</span>
+<span class="na">NAME</span><span class="o">=</span><span class="s">Q2_YYYYMMDDHHUU.bif</span>
+
+<span class="k">[PETForcing PET]</span>
+<span class="na">TYPE</span><span class="o">=</span><span class="s">BIF</span>
+<span class="na">UNIT</span><span class="o">=</span><span class="s">mm/h</span>
+<span class="na">FREQ</span><span class="o">=</span><span class="s">m</span>
+<span class="na">LOC</span><span class="o">=</span><span class="s">/EF5Demo/FF/pet</span>
+<span class="na">NAME</span><span class="o">=</span><span class="s">PET_MM.bif</span>
+
+<span class="k">[Gauge OKC]</span>
+<span class="na">LON</span><span class="o">=</span><span class="s">-97.01</span>
+<span class="na">LAT</span><span class="o">=</span><span class="s">35.68</span>
+<span class="na">OBS</span><span class="o">=</span><span class="s">/EF5Demo/obs/okc.csv</span>
+
+<span class="k">[Gauge AR]</span>
+<span class="na">LON</span><span class="o">=</span><span class="s">-93.62</span>
+<span class="na">LAT</span><span class="o">=</span><span class="s">34.37</span>
+
+<span class="k">[Basin FF]</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">OKC</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">AR</span>
+
+<span class="k">[CrestParamSet FF]</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">AR</span>
+<span class="na">COEM</span><span class="o">=</span><span class="s">24.230076 EXPM=0.502391 RIVER=1.73056</span>
+<span class="na">UNDER</span><span class="o">=</span><span class="s">0.291339 LEAKO=0.56668 LEAKI=0.251648</span>
+<span class="na">TH</span><span class="o">=</span><span class="s">63.20205 GM=1.364364 PWM=71.96465</span>
+<span class="na">PB</span><span class="o">=</span><span class="s">0.964355 PIM=6.508687 PKE=0.19952</span>
+<span class="na">PFC</span><span class="o">=</span><span class="s">2.578529 IWU=53.52593 ISO=5.899539</span>
+<span class="na">ISU</span><span class="o">=</span><span class="s">17.31128</span>
+<span class="na">GAUGE</span><span class="o">=</span><span class="s">OKC</span>
+<span class="na">COEM</span><span class="o">=</span><span class="s">24.230076 EXPM=0.502391 RIVER=1.73056</span>
+<span class="na">UNDER</span><span class="o">=</span><span class="s">0.291339 LEAKO=0.56668 LEAKI=0.251648</span>
+<span class="na">TH</span><span class="o">=</span><span class="s">63.20205 GM=1.364364 PWM=71.96465</span>
+<span class="na">PB</span><span class="o">=</span><span class="s">0.964355 PIM=6.508687 PKE=0.19952</span>
+<span class="na">PFC</span><span class="o">=</span><span class="s">2.578529 IWU=53.52593 ISO=5.899539</span>
+<span class="na">ISU</span><span class="o">=</span><span class="s">17.31128</span>
+
+<span class="k">[Task RunFF]</span>
+<span class="na">STYLE</span><span class="o">=</span><span class="s">SIMU</span>
+<span class="na">MODEL</span><span class="o">=</span><span class="s">CREST</span>
+<span class="na">BASIN</span><span class="o">=</span><span class="s">FF</span>
+<span class="na">PRECIP</span><span class="o">=</span><span class="s">Q2_PRECIP</span>
+<span class="na">PET</span><span class="o">=</span><span class="s">PET</span>
+<span class="na">OUTPUT</span><span class="o">=</span><span class="s">/EF5Demo/FF/output/</span>
+<span class="na">PARAM_SET</span><span class="o">=</span><span class="s">FF</span>
+<span class="na">TIMESTEP</span><span class="o">=</span><span class="s">5u</span>
+<span class="na">TIME_BEGIN</span><span class="o">=</span><span class="s">201006010000</span>
+<span class="na">TIME_END</span><span class="o">=</span><span class="s">201006010030</span>
+
+<span class="k">[Execute]</span>
+<span class="na">TASK</span><span class="o">=</span><span class="s">RunFF</span>
+</pre></div>
+</div>
+<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
+documentation for details.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Humberto Vergara.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
